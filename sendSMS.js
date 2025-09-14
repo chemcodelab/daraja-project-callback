@@ -1,4 +1,7 @@
 require('dotenv').config();
+console.log('🔐 AT_USERNAME:', process.env.AT_USERNAME);
+console.log('🔐 AT_API_KEY:', process.env.AT_API_KEY ? 'Loaded' : 'Missing');
+
 const africastalking = require('africastalking')({
   apiKey: process.env.AT_API_KEY,
   username: process.env.AT_USERNAME
