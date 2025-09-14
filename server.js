@@ -1,49 +1,22 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
 
+const app = express();
 app.use(bodyParser.json());
 
-// Middleware to log incoming requests
-app.use((req, res, next) => {
-  console.log(`📥 Incoming request: ${req.method} ${req.url}`);
-  next();
+app.get('/', (req, res) => {
+  res.send('✅ Daraja Callback Server is running');
 });
 
-// Simulated bundle delivery function
-function deliverBundle(msisdn, amount) {
-  console.log(`📦 Delivering ${amount}MB to ${msisdn}...`);
-  setTimeout(() => {
-    console.log(`✅ Bundle delivered to ${msisdn} for ${amount}MB`);
-  }, 1000);
-}
-
-// Payment confirmation route
 app.post('/payment-callback', (req, res) => {
-  console.log('✅ Confirmation received:', req.body);
-
-  const { TransAmount, MSISDN, TransID } = req.body;
-
-  // Trigger mock bundle delivery
-  deliverBundle(MSISDN, TransAmount);
-
-  res.status(200).json({
-    ResultCode: 0,
-    ResultDesc: 'Confirmation Received Successfully'
-  });
+  console.log('✅ Callback received:', JSON.stringify(req.body, null, 2));
+  const { MSISDN, TransAmount } = req.body;
+  console.log(`📦 Delivering ${TransAmount}MB to ${MSISDN}...`);
+  res.status(200).json({ ResultCode: 0, ResultDesc: 'Accepted' });
 });
 
-// Payment validation route
-app.post('/payment-validation', (req, res) => {
-  console.log('🔍 Validation request:', req.body);
-  res.status(200).json({
-    ResultCode: 0,
-    ResultDesc: 'Validation Passed Successfully'
-  });
-});
-
-// Dynamic port binding for Render
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
