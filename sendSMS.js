@@ -1,10 +1,6 @@
-require('dotenv').config();
-console.log('🔐 AT_USERNAME:', process.env.AT_USERNAME);
-console.log('🔐 AT_API_KEY:', process.env.AT_API_KEY ? 'Loaded' : 'Missing');
-
 const africastalking = require('africastalking')({
-  apiKey: process.env.AT_API_KEY,
-  username: process.env.AT_USERNAME
+  apiKey: 'atsk_9041eab0c827dd06bb2e1fbfb54fe433621ae8c146123967e149cf501b698e0bab4afb4a',
+  username: 'sandbox'
 });
 
 const sms = africastalking.SMS;
